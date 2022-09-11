@@ -12,36 +12,38 @@
 </template>
 
 <script setup>
-import { Product } from "src/stores/model";
-import { onMounted, ref, toRaw } from "vue";
-import { db } from "src/stores/persistentStorage";
-import { useRoute, useRouter } from "vue-router";
-import { useQuasar } from "quasar";
+import { Product } from 'src/stores/model'
+import { onMounted, ref, toRaw } from 'vue'
+//import { db } from "src/stores/persistentStorage";
+import { db } from 'src/stores/sqlStorage'
+import { useRoute, useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
-const router = useRouter();
-const route = useRoute();
-const $q = useQuasar();
+const router = useRouter()
+const route = useRoute()
+const $q = useQuasar()
 
-const product = ref(new Product());
-console.debug(product.value);
+const product = ref(new Product())
+console.debug(product.value)
 
 onMounted(async () => {
   // todo: do we have an id?
-  const idStr = route.params.id;
+  const idStr = route.params.id
   if (idStr) {
-    const id = Number(idStr);
-    console.debug("loading product", id);
+    const id = Number(idStr)
+    console.debug('loading product', id)
 
     // load record
-    await loadProduct(id);
+    await loadProduct(id)
   }
-});
+})
 
 async function loadProduct(id) {
   //console.debug("id", typeof id);
-  product.value = await db.products.get(id);
+  //product.value = await db.products.get(id)
+  product.value = await db.products.get(id)
 
-  $q.notify("record loaded");
+  $q.notify('record loaded')
 }
 
 async function onFabClick() {
@@ -50,16 +52,16 @@ async function onFabClick() {
 }
 
 async function saveProduct() {
-    try {
-    const toSave = toRaw(product.value);
-    await db.products.put(toSave);
+  try {
+    const toSave = toRaw(product.value)
+    // await db.products.put(toSave);
+    //db.
 
-    $q.notify("record saved");
+    $q.notify('record saved')
 
-    router.back();
+    router.back()
   } catch (err) {
-    $q.notify(err);
+    $q.notify(err)
   }
-
 }
 </script>

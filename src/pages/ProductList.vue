@@ -20,38 +20,41 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-import { useRouter } from "vue-router";
-import { db } from "../stores/persistentStorage";
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+// import { db } from '../stores/persistentStorage'
+import { useSqlDatabase } from 'src/stores/sqlStorage'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
+const { db } = useSqlDatabase()
 
-const isSelectionMode = ref(false);
-const products = ref([]);
+const isSelectionMode = ref(false)
+const products = ref([])
 
 onMounted(async () => {
   // selection mode?
-  isSelectionMode.value = route.params.selection;
+  isSelectionMode.value = route.params.selection
 
-  await loadData();
-});
+  await loadData()
+})
 
 function edit(productId) {
-  router.push({ name: "Product Editor", params: { id: productId } });
+  router.push({ name: 'Product Editor', params: { id: productId } })
 }
 
 async function loadData() {
   try {
-    products.value = await db.products.toArray();
+    //products.value = await db.products.toArray();
+    products.value = await db.products.all()
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
 function onFabClick() {
-  router.push({ name: "Product Editor" });
+  router.push({ name: 'Product Editor' })
 }
 </script>
       

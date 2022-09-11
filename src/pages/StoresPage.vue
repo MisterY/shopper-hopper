@@ -3,7 +3,10 @@
     <div>Stores</div>
 
     <q-list>
-      <q-item v-for="store in stores" :key="store.id">{{ store.name }}</q-item>
+      <q-item v-for="store in stores" :key="store.id">
+        <q-item-label>{{ store }}</q-item-label>
+        <q-item-section>{{ store.name }}</q-item-section>
+      </q-item>
     </q-list>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -35,40 +38,41 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { db } from "../stores/persistentStorage";
-import {Store} from '../stores/model'
+import { onMounted, ref } from 'vue'
+import { db } from '../stores/persistentStorage'
+import { Store } from '../stores/model'
+import { useSqlDatabase } from '../stores/sqlStorage'
 
-const stores = ref([]);
-const isPromptVisible = ref(false);
+const stores = ref([])
+const isPromptVisible = ref(false)
 const storeName = ref(null)
+//const { db } = useSqlDatabase()
 
 onMounted(async () => {
   // load stores
-  //   stores.value =
-  await loadData();
-});
+  //await loadData()
+  db.stores.add(new Store())
+})
 
 async function loadData() {
-  stores.value = await db.stores.toArray() //.toCollection()
-
-  //const count = await stores.count()
-//   console.debug(stores.value);
+  //stores.value = await db.stores.toArray() //.toCollection()
+  stores.value = await db.stores.all()
+  console.debug(stores.value)
 }
 
 async function onAddStore() {
-    const newStore = new Store()
-    newStore.name = storeName.value
+  const newStore = new Store()
+  newStore.name = storeName.value
 
-    console.debug('saving', newStore)
+  console.debug('saving', newStore)
 
-    await db.stores.add(newStore)
+  await db.stores.add(newStore)
 
-    await loadData()
+  await loadData()
 }
 
 function onFabClick() {
   // new store
-  isPromptVisible.value = true;
+  isPromptVisible.value = true
 }
 </script>

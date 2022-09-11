@@ -5,7 +5,6 @@
 import alasql from 'alasql'
 
 /*
-
 async function testAla() {
     console.log('dbs:', alasql.databases)
   
@@ -32,51 +31,115 @@ async function testAla() {
 
 const dbName = 'shopperhopper'
 
-class Database {
-  sql
-
-  constructor(alasql) {
-    this.sql = alasql
+class BaseTable {
+  constructor() {
+    this.db = new Database()
   }
 
-  async #create() {
+  async add(entity) {
+    //const entityJson = JSON.stringify(entity)
+    //const fields = Object.keys(entity)
+    //const values = Object.values(entity)
+    //const parameters = Array(fields.length).fill('?')
+
+    const sql = `insert into ${this.tableName} values ?`
+
+    return await this.db.run(sql, [entity])
+  }
+
+  async all() {
+    return await this.db.run(`select * from ${this.tableName}`)
+  }
+
+  async get(id) {
+    let result = await this.db.run(
+      `select top 1 * from ${this.tableName} where id=?`,
+      id
+    )
+    return result[0]
+  }
+}
+
+class Products extends BaseTable {
+  tableName = 'products'
+}
+
+class Stores extends BaseTable {
+  tableName = 'stores'
+}
+
+class ShoppingList extends BaseTable {
+  tableName = 'shoppingList'
+}
+
+class DataLayer {
+  products
+  stores
+  shoppingList
+
+  constructor() {
+    this.products = new Products()
+    this.stores = new Stores()
+    this.shoppingList = new ShoppingList()
+  }
+}
+
+class Database {
+  constructor() {}
+
+  async run(sql, parameters) {
+    await this.attachDatabase()
+
+    if (parameters && typeof parameters !== 'array') {
+      console.warn('Not an array!', parameters)
+      parameters = [parameters]
+    }
+
+    console.debug('executing', sql, 'with', parameters)
+
+    return await alasql.promise(sql, parameters)
+  }
+
+  async createDatabase() {
     console.log(`creating database ${dbName}...`)
 
     await alasql.promise(`create database ${dbName};`)
 
-    // Tables
-    await alasql.promise(`
-  CREATE TABLE IF NOT EXISTS stores (id int, name string, description string);
-  CREATE TABLE IF NOT EXISTS products (id int, name string, description string);
-  CREATE TABLE IF NOT EXISTS shoppingList (id int, name string, description string);
-  `)
+    await this.createTables()
   }
 
-  async #attach() {
+  async attachDatabase() {
     // check if database exists.
     await alasql.promise(`ATTACH INDEXEDDB DATABASE ${dbName};`)
     const database = alasql.databases[dbName]
     if (!database) {
-      await this.#create()
+      await this.createDatabase()
+    }
+    if (database.tables.length === 0) {
+      this.createTables()
     }
 
     await alasql.promise(`use ${dbName};`)
   }
 
-  async run(sql) {
-    await this.#attach()
-
-    return await this.sql.promise(sql)
+  async createTables() {
+    // Tables
+    await alasql.promise(`
+    CREATE TABLE IF NOT EXISTS stores (id int, name string, description string);
+    CREATE TABLE IF NOT EXISTS products (id int, name string, description string);
+    CREATE TABLE IF NOT EXISTS shoppingList (id int, name string, description string);
+    `)
   }
 
   async drop() {
-    await this.sql.promise(`detach database ${dbName};`)
-    return this.sql.promise(`drop INDEXEDDB database ${dbName};`)
+    await alasql.promise(`detach database ${dbName};`)
+    return alasql.promise(`drop INDEXEDDB database ${dbName};`)
   }
 }
 
 export function useSqlDatabase() {
-  const db = new Database(alasql)
+  //const db = new Database(alasql)
+  const db = new DataLayer()
 
   return { db }
 }

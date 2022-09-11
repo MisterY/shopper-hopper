@@ -17,9 +17,8 @@ const router = useRouter()
 const { db } = useSqlDatabase()
 
 onMounted(async () => {
-  console.log(await db.run('select top 1 * from products'))
-  //await db.drop()
-  await db.run("insert into stores values(0, 'Hornbach', 'favourite')")
+  // load data
+  // shoppingList
 })
 
 function onFabClick() {
