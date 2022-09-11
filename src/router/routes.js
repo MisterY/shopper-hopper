@@ -3,10 +3,15 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/IndexPage.vue") },
+      // { path: "", component: () => import("pages/IndexPage.vue") },
+      { path: '', name: 'root', redirect: '/shoppinglist' },
       {
-        path: "/settings",
+        path: "settings",
         component: () => import("src/pages/SettingsPage.vue"),
+      },
+      {
+        path: "shoppinglist",
+        component: () => import("src/pages/ShoppingList.vue"),
       },
       {
         path: "stores",

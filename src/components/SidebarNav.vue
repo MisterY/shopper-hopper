@@ -22,11 +22,17 @@ import { useMainStore } from "src/stores/mainStore";
 const { drawerOpen } = storeToRefs(useMainStore());
 
 const essentialLinks = [
+  // {
+  //   title: "Home",
+  //   caption: "Main page",
+  //   icon: "home",
+  //   link: "/",
+  // },
   {
-    title: "Home",
-    caption: "Main page",
-    icon: "home",
-    link: "/",
+    title: "Shopping List",
+    caption: "List of items to buy",
+    icon: "list_alt",
+    link: "shoppinglist",
   },
   {
     title: "Stores",
