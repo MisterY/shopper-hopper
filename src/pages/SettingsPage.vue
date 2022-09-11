@@ -27,6 +27,7 @@ onMounted(async () => {
 
 function toggleDarkMode() {
     console.debug('toggling...')
+    
     $q.dark.toggle()
 }
 </script>
