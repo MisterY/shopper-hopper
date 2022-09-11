@@ -6,15 +6,25 @@ const routes = [
       // { path: "", component: () => import("pages/IndexPage.vue") },
       { path: '', name: 'root', redirect: '/shoppinglist' },
       {
-        path: "settings",
+        name: 'Product Editor',
+        path: "/product/:id?",
+        component: () => import("src/pages/ProductEditor.vue"),
+      },
+      {
+        name: 'Product List',
+        path: "/products/:edit?",
+        component: () => import("src/pages/ProductList.vue"),
+      },
+      {
+        path: "/settings",
         component: () => import("src/pages/SettingsPage.vue"),
       },
       {
-        path: "shoppinglist",
+        path: "/shoppinglist",
         component: () => import("src/pages/ShoppingList.vue"),
       },
       {
-        path: "stores",
+        path: "/stores",
         component: () => import("src/pages/StoresPage.vue"),
       },
     ],

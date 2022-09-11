@@ -32,19 +32,25 @@ const essentialLinks = [
     title: "Shopping List",
     caption: "List of items to buy",
     icon: "list_alt",
-    link: "shoppinglist",
+    link: "/shoppinglist",
   },
   {
     title: "Stores",
     caption: "List of stores",
-    icon: "storefront",
-    link: "stores",
+    icon: "store",
+    link: "/stores",
+  },
+  {
+    title: "Products",
+    caption: "List of all products",
+    icon: "qr_code_2",
+    link: "/products",
   },
   {
     title: "Settings",
     caption: "Settings",
     icon: "settings",
-    link: "settings",
+    link: "/settings",
   },
 ];
 
