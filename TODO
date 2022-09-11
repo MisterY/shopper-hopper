@@ -1,0 +1,43 @@
+# Shopper-Hopper
+
+* Calculator
+    * Enter amount and final price and it automatically calculates the price per unit.
+    * OR make a separate calculator or a link to another app?
+    * Calculator can be used:
+    * when in shop, buying something with price per kg. Type in price per unit, amount, and have it calculate the final price.
+* save shopping history
+    - itemized bill
+* Currencies
+    * Currency table: iso code, sign, description
+    * Set the default currency, that is used in the price entry.
+* Comparison : per category, generic name, etc.
+    * Calculate ppu and compare. 
+    * Default price comparison is by Description.
+* Scenarios
+    * Impulse shopping 
+        * When already in the store and adding an item. 
+    * Selection pop-up
+        * Add a pop-up control for adding one-line items
+        * Search for %text% in the search box (any part of text; contains).
+        * Items should be filtered, i.e. products should be filtered by Item Id; 
+        * For entering stores, and all other items that are string values.
+        * The control should search existing lists (of stores, for example), offering selecting a found item or creating a new one.
+        * "Include History" option, to see archived items.
+        * config: list items, link for create new
+        * Selection pop-up for choosing from a list of entities, plus Create New option.
+        * Price Comparison
+            * Indicate item with best price on product selection.
+* Views
+    * Product Details
+        * Product packaging
+            * Put quantity (3)
+            * 400 g x 3
+        * Move Product to another Item
+        * Produce vs products
+            * Use 1kg or 1l units for produce. Then use quantity on Item to specify how much was purchased and the units will be calculated correctly.
+            * pre-packaged products are different to produce. i.e. 1kg Honey jar x quantity is different to Onions 1.2 kg
+* Process: Shopping
+    * Action: Checkout
+        * Item: reset quantity; set state to not needed
+* Add menus like in Android 4
+    * For additional/extra options like "Move to another item", delete, etc.
