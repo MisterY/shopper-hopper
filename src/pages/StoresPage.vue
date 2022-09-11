@@ -41,30 +41,25 @@
 import { onMounted, ref } from 'vue'
 import { db } from '../stores/persistentStorage'
 import { Store } from '../stores/model'
-import { useSqlDatabase } from '../stores/sqlStorage'
 
 const stores = ref([])
 const isPromptVisible = ref(false)
 const storeName = ref(null)
-//const { db } = useSqlDatabase()
 
 onMounted(async () => {
   // load stores
-  //await loadData()
-  db.stores.add(new Store())
+  await loadData()
 })
 
 async function loadData() {
-  //stores.value = await db.stores.toArray() //.toCollection()
-  stores.value = await db.stores.all()
-  console.debug(stores.value)
+  stores.value = await db.stores.toArray() //.toCollection()
 }
 
 async function onAddStore() {
   const newStore = new Store()
   newStore.name = storeName.value
 
-  console.debug('saving', newStore)
+  // console.debug('saving', newStore)
 
   await db.stores.add(newStore)
 

@@ -14,8 +14,7 @@
 <script setup>
 import { Product } from 'src/stores/model'
 import { onMounted, ref, toRaw } from 'vue'
-//import { db } from "src/stores/persistentStorage";
-import { db } from 'src/stores/sqlStorage'
+import { db } from 'src/stores/persistentStorage'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 
@@ -40,7 +39,6 @@ onMounted(async () => {
 
 async function loadProduct(id) {
   //console.debug("id", typeof id);
-  //product.value = await db.products.get(id)
   product.value = await db.products.get(id)
 
   $q.notify('record loaded')
@@ -54,12 +52,12 @@ async function onFabClick() {
 async function saveProduct() {
   try {
     const toSave = toRaw(product.value)
-    // await db.products.put(toSave);
+    await db.products.put(toSave)
     //db.
 
     $q.notify('record saved')
 
-    router.back()
+    await router.back()
   } catch (err) {
     $q.notify(err)
   }

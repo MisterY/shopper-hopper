@@ -11,10 +11,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useSqlDatabase } from '../stores/sqlStorage'
 
 const router = useRouter()
-const { db } = useSqlDatabase()
 
 onMounted(async () => {
   // load data
