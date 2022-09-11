@@ -31,7 +31,7 @@
           Essential Links
         </q-item-label>
 
-        <EssentialLink
+        <SidebarLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
@@ -45,11 +45,13 @@
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import SidebarLink from 'src/components/SidebarLink.vue'
 
-const linksList = [
+const leftDrawerOpen = ref(false)
+
+const essentialLinks = [
   {
     title: 'Docs',
     caption: 'quasar.dev',
@@ -91,26 +93,17 @@ const linksList = [
     caption: 'Community Quasar projects',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: 'Settings',
+    caption: 'Settings',
+    icon: 'settings',
+    link: 'settings'
   }
 ]
 
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
+function toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
-    }
-  }
-})
+
 </script>
