@@ -2,12 +2,15 @@
   <q-page>
     Products
 
-    <div>Edit mode: {{ isEditMode }}</div>
+    <div>Selection mode: {{ isSelectionMode }}</div>
 
     <q-list>
-      <q-item v-for="product in products" :key="product?.id">{{
-        product?.name
-      }}</q-item>
+      <q-item v-for="product in products" :key="product?.id">
+        <q-item-section>{{ product?.name }}</q-item-section>
+        <q-item-section side @click="edit(product.id)">
+          <q-icon name="edit" />
+        </q-item-section>
+      </q-item>
     </q-list>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -25,15 +28,19 @@ import { db } from "../stores/persistentStorage";
 const route = useRoute();
 const router = useRouter();
 
-const isEditMode = ref(false);
+const isSelectionMode = ref(false);
 const products = ref([]);
 
 onMounted(async () => {
-  // edit mode?
-  isEditMode.value = route.params.edit;
+  // selection mode?
+  isSelectionMode.value = route.params.selection;
 
   await loadData();
 });
+
+function edit(productId) {
+  router.push({ name: "Product Editor", params: { id: productId } });
+}
 
 async function loadData() {
   try {

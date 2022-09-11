@@ -12,7 +12,7 @@ const routes = [
       },
       {
         name: 'Product List',
-        path: "/products/:edit?",
+        path: "/products/:selection?",
         component: () => import("src/pages/ProductList.vue"),
       },
       {

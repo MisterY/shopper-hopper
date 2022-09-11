@@ -15,27 +15,51 @@
 import { Product } from "src/stores/model";
 import { onMounted, ref, toRaw } from "vue";
 import { db } from "src/stores/persistentStorage";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
+const $q = useQuasar();
 
 const product = ref(new Product());
+console.debug(product.value);
 
 onMounted(async () => {
   // todo: do we have an id?
-  const id = route.params.id
-  if (id) {
+  const idStr = route.params.id;
+  if (idStr) {
+    const id = Number(idStr);
+    console.debug("loading product", id);
+
     // load record
-    product.value = db.products.get(id)
+    await loadProduct(id);
   }
 });
 
+async function loadProduct(id) {
+  //console.debug("id", typeof id);
+  product.value = await db.products.get(id);
+
+  $q.notify("record loaded");
+}
+
 async function onFabClick() {
   // save
-  const toSave = toRaw(product.value)
-  await db.products.add(toSave);
+  saveProduct()
+}
 
-  router.back()
+async function saveProduct() {
+    try {
+    const toSave = toRaw(product.value);
+    await db.products.put(toSave);
+
+    $q.notify("record saved");
+
+    router.back();
+  } catch (err) {
+    $q.notify(err);
+  }
+
 }
 </script>
