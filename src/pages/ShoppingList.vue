@@ -3,7 +3,9 @@
     Shopping List
 
     <q-list>
-      <q-item v-for="item in items" :key="item.id"> </q-item>
+      <q-item v-for="item in items" :key="item.id">
+        {{ products[item.productid].name }}
+      </q-item>
     </q-list>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -23,6 +25,7 @@ const router = useRouter()
 const store = useMainStore()
 
 const items = ref([])
+const products = ref({})
 
 onMounted(async () => {
   // load data
@@ -41,8 +44,12 @@ async function loadData() {
   let productIds = listItems.map((item) => item.productid)
 
   // load products
-  let products = await db.products.bulkGet(productIds)
+  let productRecords = await db.products.bulkGet(productIds)
   console.log('products:', products)
+
+  let productsObject = {}
+  productRecords.forEach((product) => (productsObject[product.id] = product))
+  products.value = productsObject
 
   items.value = listItems
 }
