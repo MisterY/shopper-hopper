@@ -14,13 +14,15 @@
 <script setup>
 import { Product } from 'src/stores/model'
 import { onMounted, ref, toRaw } from 'vue'
-import { db } from 'src/stores/persistentStorage'
+// import { db } from 'src/stores/persistentStorage'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import { useSqlDatabase } from 'src/stores/sqlStorage'
 
 const router = useRouter()
 const route = useRoute()
 const $q = useQuasar()
+const { db } = useSqlDatabase()
 
 const product = ref(new Product())
 console.debug(product.value)
@@ -52,8 +54,8 @@ async function onFabClick() {
 async function saveProduct() {
   try {
     const toSave = toRaw(product.value)
-    await db.products.put(toSave)
-    //db.
+    //await db.products.put(toSave)
+    await db.products.add(toSave)
 
     $q.notify('record saved')
 

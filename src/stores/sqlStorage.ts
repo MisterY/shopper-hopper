@@ -71,6 +71,13 @@ class Stores extends BaseTable {
 
 class ShoppingList extends BaseTable {
   tableName = 'shoppingList'
+
+  async allItems() {
+    // select a join with product
+    let sql = `select * from shoppingList inner join products \
+                on shoppingList.productid = products.id`
+    return Database.run(sql)
+  }
 }
 
 class DataLayer {
@@ -86,46 +93,52 @@ class DataLayer {
 }
 
 class Database {
-  static async run(sql: string, parameters?: Array<any>) {
-    await this.attachDatabase()
+  static async setupDatabase() {
+    // check if database exists. try to attach.
+    await alasql.promise(`ATTACH INDEXEDDB DATABASE ${dbName};`)
 
-    console.debug('executing', sql, 'with', parameters)
+    const database = alasql.databases[dbName]
+    if (!database) {
+      console.log(`creating database ${dbName}...`)
+      await alasql.promise(`create database ${dbName};`)
+    }
+
+    //alasql.use(dbName)
+    await alasql.promise(`use ${dbName};`)
+
+    //const database = alasql.databases[dbName]
+    //if (database.tables.length === 0) {
+    //if (!alasql.tables.length) {
+    let tableNames = Object.keys(database.tables)
+    if (tableNames.length === 0) {
+      await this.createTables()
+    }
+  }
+
+  static async run(sql: string, parameters?: Array<any>) {
+    await this.setupDatabase()
+
+    console.debug('executing', sql)
+    if (parameters) {
+      console.log('with', parameters)
+    }
 
     return await alasql.promise(sql, parameters)
   }
 
-  static async createDatabase() {
-    console.log(`creating database ${dbName}...`)
-
-    await alasql.promise(`create database ${dbName};`)
-
-    //const database = alasql.databases[dbName]
-    //if (database.tables.length === 0) {
-
-    if (!alasql.tables.length) {
-      this.createTables()
-    }
-  }
-
-  static async attachDatabase() {
-    // check if database exists.
-    await alasql.promise(`ATTACH INDEXEDDB DATABASE ${dbName};`)
-    const database = alasql.databases[dbName]
-    if (!database) {
-      await this.createDatabase()
-    }
-
-    //await alasql.promise(`use ${dbName};`)
-    alasql.use(dbName)
-  }
-
   static async createTables() {
+    console.log('creating tables...')
+
     // Tables
-    await alasql.promise(`
-    CREATE TABLE IF NOT EXISTS stores (id int, name string, description string);
-    CREATE TABLE IF NOT EXISTS products (id int, name string, description string);
-    CREATE TABLE IF NOT EXISTS shoppingList (id int, name string, description string);
-    `)
+    await alasql.promise(
+      'CREATE TABLE IF NOT EXISTS stores (id int Primary Key, name string, description string);'
+    )
+    await alasql.promise(
+      'CREATE TABLE IF NOT EXISTS products (id int PRIMARY KEY, name string, description string);'
+    )
+    await alasql.promise(
+      'CREATE TABLE IF NOT EXISTS shoppingList (id int PRIMARY KEY, name string, description string);'
+    )
   }
 
   static async drop() {

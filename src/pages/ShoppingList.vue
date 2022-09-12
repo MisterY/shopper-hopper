@@ -2,6 +2,10 @@
   <q-page class="q-ma-sm">
     Shopping List
 
+    <q-list>
+      <q-item v-for="item in items" :key="item.id"> </q-item>
+    </q-list>
+
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="accent" @click="onFabClick" />
     </q-page-sticky>
@@ -19,13 +23,26 @@ const router = useRouter()
 const store = useMainStore()
 const { db } = useSqlDatabase()
 
+const items = ref([])
+
 onMounted(async () => {
   // load data
+  await loadData()
+
   // shoppingList
 
   // Check if we are back from the selection mode.
   await handleSelection()
 })
+
+async function loadData() {
+  //
+  //let listItems = await db.shoppingList.all()
+  let listItems = await db.shoppingList.allItems()
+  console.log('items:', listItems)
+
+  //items.value =
+}
 
 async function handleSelection() {
   // get the selected product from the state store
@@ -38,8 +55,6 @@ async function handleSelection() {
   var item = new ShoppingListItem(productId)
   // var item = db.shoppingList.newRecord(productId)
   //console.log(item instanceof ShoppingListItem)
-
-  debugger
 
   await db.shoppingList.add(item)
 
