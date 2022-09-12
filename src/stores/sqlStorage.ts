@@ -131,8 +131,10 @@ class Database {
 
     // Tables
     await alasql.promise(
-      'CREATE TABLE IF NOT EXISTS stores (id int Primary Key, name string, description string);'
+      'CREATE TABLE IF NOT EXISTS stores (`id` int PRIMARY KEY, `name` string NOT NULL, `description` string);'
     )
+    await alasql.promise('create index `pk_stores` ON stores (`id`)')
+
     await alasql.promise(
       'CREATE TABLE IF NOT EXISTS products (id int PRIMARY KEY, name string, description string);'
     )

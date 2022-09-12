@@ -52,7 +52,7 @@ onMounted(async () => {
 })
 
 async function loadData() {
-  stores.value = await db.stores.toArray() //.toCollection()
+  stores.value = await db.stores.toArray()
 }
 
 async function onAddStore() {

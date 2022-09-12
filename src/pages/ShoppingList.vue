@@ -16,12 +16,11 @@
 import { onMounted, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMainStore } from 'src/stores/mainStore'
-import { useSqlDatabase } from 'src/stores/sqlStorage'
 import { ShoppingListItem } from 'src/stores/model'
+import { db } from '../stores/persistentStorage'
 
 const router = useRouter()
 const store = useMainStore()
-const { db } = useSqlDatabase()
 
 const items = ref([])
 

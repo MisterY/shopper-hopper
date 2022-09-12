@@ -29,12 +29,11 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { useMainStore } from 'src/stores/mainStore'
-import { useSqlDatabase } from 'src/stores/sqlStorage'
+import { db } from '../stores/persistentStorage'
 
 const route = useRoute()
 const router = useRouter()
 const store = useMainStore()
-const { db } = useSqlDatabase()
 
 const isSelectionMode = ref(false)
 const products = ref([])
@@ -53,7 +52,7 @@ function edit(productId) {
 
 async function loadData() {
   try {
-    products.value = await db.products.all()
+    products.value = await db.products.toArray()
   } catch (err) {
     console.error(err)
   }
