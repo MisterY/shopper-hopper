@@ -3,27 +3,24 @@
  */
 
 export class Store {
-  // id = null
-  name
-
-  constructor() {
-    // this.id = undefined
-    this.name = null
-  }
+  id: number | undefined
+  name: string
 }
 
 export class Product {
-  name
-  description
+  id: number | undefined
+  name: string
+  description: string | undefined
+}
 
-  constructor() {
-    this.name = undefined
-    this.description = undefined
-  }
+export class ShoppingList {
+  id: number | undefined
+  name: string
+  stores: Array<number>
 }
 
 export class ShoppingListItem {
-  id
+  id: number | undefined
   productid: number | undefined
 
   constructor(productId: number) {
