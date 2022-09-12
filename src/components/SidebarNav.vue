@@ -14,12 +14,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { storeToRefs } from "pinia";
-import SidebarLink from "src/components/SidebarLink.vue";
-import { useMainStore } from "src/stores/mainStore";
+import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import SidebarLink from 'src/components/SidebarLink.vue'
+import { useMainStore } from 'src/stores/mainStore'
 
-const { drawerOpen } = storeToRefs(useMainStore());
+const { drawerOpen } = storeToRefs(useMainStore())
 
 const essentialLinks = [
   // {
@@ -29,32 +29,32 @@ const essentialLinks = [
   //   link: "/",
   // },
   {
-    title: "Shopping List",
-    caption: "List of items to buy",
-    icon: "list_alt",
-    link: "/shoppinglist",
+    title: 'Shopping List',
+    caption: 'List of items to buy',
+    icon: 'list_alt',
+    link: '/shoppinglist',
   },
   {
-    title: "Stores",
-    caption: "List of stores",
-    icon: "store",
-    link: "/stores",
+    title: 'Stores',
+    caption: 'List of stores',
+    icon: 'store',
+    link: '/stores',
   },
   {
-    title: "Products",
-    caption: "List of all products",
-    icon: "qr_code_2",
-    link: "/products",
+    title: 'Products',
+    caption: 'List of all products',
+    icon: 'qr_code_2',
+    link: '/products',
   },
   {
-    title: "Settings",
-    caption: "Settings",
-    icon: "settings",
-    link: "/settings",
+    title: 'Settings',
+    caption: 'Settings',
+    icon: 'settings',
+    link: '/settings',
   },
-];
+]
 
 onMounted(async () => {
   //leftDrawerOpen.value = store.drawerOpen.value
-});
+})
 </script>
