@@ -20,7 +20,7 @@ onMounted(async () => {
 })
 
 function onFabClick() {
-  router.push({ name: 'Product List', params: { edit: true } })
+  router.push({ name: 'Product List', params: { selection: true } })
 }
 </script>
   

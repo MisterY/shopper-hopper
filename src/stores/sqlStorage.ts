@@ -32,6 +32,9 @@ async function testAla() {
 const dbName = 'shopperhopper'
 
 class BaseTable {
+  tableName: string | undefined
+  db: Database
+
   constructor() {
     this.db = new Database()
   }
@@ -87,13 +90,13 @@ class DataLayer {
 class Database {
   constructor() {}
 
-  async run(sql, parameters) {
+  async run(sql: string, parameters?: Array<any>) {
     await this.attachDatabase()
 
-    if (parameters && typeof parameters !== 'array') {
-      console.warn('Not an array!', parameters)
-      parameters = [parameters]
-    }
+    // if (parameters && typeof parameters !== 'array') {
+    //   console.warn('Not an array!', parameters)
+    //   parameters = [parameters]
+    // }
 
     console.debug('executing', sql, 'with', parameters)
 

@@ -18,7 +18,7 @@
     </q-header>
 
     <SidebarNav></SidebarNav>
-    
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -26,9 +26,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useMainStore } from 'src/stores/mainStore';
-import SidebarNav from 'src/components/SidebarNav.vue';
+import { ref } from 'vue'
+import { useMainStore } from 'src/stores/mainStore'
+import SidebarNav from 'src/components/SidebarNav.vue'
 //import { storeToRefs } from 'pinia';
 
 const store = useMainStore()

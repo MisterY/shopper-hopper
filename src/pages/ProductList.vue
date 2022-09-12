@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    Products
+    <!-- <q-toolbar>
+      <q-toolbar-title>Products</q-toolbar-title>
+    </q-toolbar> -->
+    <p>Products</p>
 
     <div>Selection mode: {{ isSelectionMode }}</div>
 

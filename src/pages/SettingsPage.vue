@@ -5,29 +5,31 @@
 
     <div>
       <h1>Theme</h1>
-      <q-checkbox v-model="isDarkModeOn" @update:model-value="toggleDarkMode">Dark Mode</q-checkbox>
+      <q-checkbox v-model="isDarkModeOn" @update:model-value="toggleDarkMode"
+        >Dark Mode</q-checkbox
+      >
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useQuasar } from "quasar";
+import { onMounted, ref } from 'vue'
+import { useQuasar } from 'quasar'
 
-const $q = useQuasar();
+const $q = useQuasar()
 
-const isDarkModeOn = ref(null);
+const isDarkModeOn = ref(null)
 
 onMounted(async () => {
-  isDarkModeOn.value = $q.dark.isActive;
+  isDarkModeOn.value = $q.dark.isActive
   //console.debug($q.dark.mode)
   //$q.dark.set(true)
   // $q.dark.toggle()
-});
+})
 
 function toggleDarkMode() {
-    console.debug('toggling...')
-    
-    $q.dark.toggle()
+  console.debug('toggling...')
+
+  $q.dark.toggle()
 }
 </script>
