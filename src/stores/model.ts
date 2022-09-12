@@ -3,7 +3,7 @@
  */
 
 export class Store {
-  id = null
+  // id = null
   name
 
   constructor() {

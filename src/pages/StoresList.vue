@@ -61,7 +61,8 @@ async function onAddStore() {
 
   // console.debug('saving', newStore)
 
-  await db.stores.add(newStore)
+  let id = await db.stores.put(newStore)
+  console.log('created store', id)
 
   await loadData()
 }

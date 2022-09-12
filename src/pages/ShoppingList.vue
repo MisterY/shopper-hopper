@@ -36,11 +36,15 @@ onMounted(async () => {
 
 async function loadData() {
   //
-  //let listItems = await db.shoppingList.all()
-  let listItems = await db.shoppingList.allItems()
+  let listItems = await db.shoppingList.toArray()
   console.log('items:', listItems)
+  let productIds = listItems.map((item) => item.productid)
 
-  //items.value =
+  // load products
+  let products = await db.products.bulkGet(productIds)
+  console.log('products:', products)
+
+  items.value = listItems
 }
 
 async function handleSelection() {
