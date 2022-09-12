@@ -11,6 +11,11 @@ const routes = [
         component: () => import('src/pages/Lists.vue'),
       },
       {
+        name: 'List Editor',
+        path: '/list/:id?',
+        component: () => import('src/pages/ListEditor.vue'),
+      },
+      {
         name: 'Product Editor',
         path: '/product/:id?',
         component: () => import('src/pages/ProductEditor.vue'),

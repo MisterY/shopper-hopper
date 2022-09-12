@@ -9,6 +9,10 @@
         <q-item-section>
           {{ products[item.productid].name }}
         </q-item-section>
+        <q-item-section side>
+          <q-icon name="check_box_outline_blank" />
+          <q-icon name="check_box_outline" />
+        </q-item-section>
       </q-item>
     </q-list>
 
