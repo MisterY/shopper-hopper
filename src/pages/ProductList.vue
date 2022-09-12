@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-ma-sm">
     <!-- <q-toolbar>
       <q-toolbar-title>Products</q-toolbar-title>
     </q-toolbar> -->
@@ -9,7 +9,9 @@
 
     <q-list>
       <q-item v-for="product in products" :key="product?.id">
-        <q-item-section>{{ product?.name }}</q-item-section>
+        <q-item-section @click="onProductClick(product.id)">{{
+          product?.name
+        }}</q-item-section>
         <q-item-section side @click="edit(product.id)">
           <q-icon name="edit" />
         </q-item-section>
@@ -22,21 +24,24 @@
   </q-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { db } from '../stores/persistentStorage'
+import { useMainStore } from 'src/stores/mainStore'
 
 const route = useRoute()
 const router = useRouter()
+const store = useMainStore()
 
 const isSelectionMode = ref(false)
 const products = ref([])
 
 onMounted(async () => {
   // selection mode?
-  isSelectionMode.value = route.params.selection
+  let selectionString = route.params.selection
+  isSelectionMode.value = selectionString === 'true'
 
   await loadData()
 })
@@ -55,6 +60,17 @@ async function loadData() {
 
 function onFabClick() {
   router.push({ name: 'Product Editor' })
+}
+
+async function onProductClick(productId) {
+  if (isSelectionMode.value) {
+    // return the product id if in selection mode.
+    store.selectProduct(productId)
+    await router.push({ name: 'Shopping List' })
+  } else {
+    // Otherwise, edit record.
+    edit(productId)
+  }
 }
 </script>
       

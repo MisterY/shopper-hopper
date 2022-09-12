@@ -20,6 +20,7 @@ const routes = [
         component: () => import('src/pages/SettingsPage.vue'),
       },
       {
+        name: 'Shopping List',
         path: '/shoppinglist',
         component: () => import('src/pages/ShoppingList.vue'),
       },
