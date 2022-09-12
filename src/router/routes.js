@@ -6,6 +6,11 @@ const routes = [
       // { path: "", component: () => import("pages/IndexPage.vue") },
       { path: '', name: 'root', redirect: '/shoppinglist' },
       {
+        name: 'Shopping Lists',
+        path: '/lists',
+        component: () => import('src/pages/Lists.vue'),
+      },
+      {
         name: 'Product Editor',
         path: '/product/:id?',
         component: () => import('src/pages/ProductEditor.vue'),

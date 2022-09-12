@@ -9,9 +9,12 @@
 
     <q-list>
       <q-item v-for="product in products" :key="product?.id">
-        <q-item-section @click="onProductClick(product.id)">{{
-          product?.name
-        }}</q-item-section>
+        <q-item-section @click="onProductClick(product.id)">
+          {{ product?.name }}
+          <q-item-label caption>
+            {{ product.description }}
+          </q-item-label>
+        </q-item-section>
         <q-item-section side @click="edit(product.id)">
           <q-icon name="edit" />
         </q-item-section>

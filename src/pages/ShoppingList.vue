@@ -4,7 +4,9 @@
 
     <q-list>
       <q-item v-for="item in items" :key="item.id">
-        {{ products[item.productid].name }}
+        <q-item-section>
+          {{ products[item.productid].name }}
+        </q-item-section>
       </q-item>
     </q-list>
 
@@ -28,13 +30,11 @@ const items = ref([])
 const products = ref({})
 
 onMounted(async () => {
-  // load data
-  await loadData()
-
-  // shoppingList
-
   // Check if we are back from the selection mode.
   await handleSelection()
+
+  // load data
+  await loadData()
 })
 
 async function loadData() {

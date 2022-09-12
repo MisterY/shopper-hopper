@@ -9,6 +9,14 @@
         :key="link.title"
         v-bind="link"
       />
+
+      <q-separator />
+
+      <SidebarLink
+        v-for="link in secondaryLinks"
+        :key="link.title"
+        v-bind="link"
+      />
     </q-list>
   </q-drawer>
 </template>
@@ -35,6 +43,12 @@ const essentialLinks = [
     link: '/shoppinglist',
   },
   {
+    title: 'Lists',
+    caption: 'Shopping lists',
+    icon: 'view_list',
+    link: '/lists',
+  },
+  {
     title: 'Stores',
     caption: 'List of stores',
     icon: 'store',
@@ -46,6 +60,9 @@ const essentialLinks = [
     icon: 'qr_code_2',
     link: '/products',
   },
+]
+
+const secondaryLinks = [
   {
     title: 'Settings',
     caption: 'Settings',

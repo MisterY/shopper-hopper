@@ -53,8 +53,7 @@ async function onFabClick() {
 async function saveProduct() {
   try {
     const toSave = toRaw(product.value)
-    //await db.products.put(toSave)
-    await db.products.add(toSave)
+    await db.products.put(toSave)
 
     $q.notify('record saved')
 

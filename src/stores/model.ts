@@ -27,7 +27,7 @@ export class ShoppingListItem {
   productid: number | undefined
 
   constructor(productId: number) {
-    this.id = Date.now()
+    // this.id = Date.now()
     this.productid = productId
   }
 }
