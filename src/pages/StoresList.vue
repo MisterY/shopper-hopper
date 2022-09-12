@@ -2,9 +2,8 @@
   <q-page>
     <div>Stores</div>
 
-    <q-list>
+    <q-list separator>
       <q-item v-for="store in stores" :key="store.id">
-        <q-item-label>{{ store }}</q-item-label>
         <q-item-section>{{ store.name }}</q-item-section>
       </q-item>
     </q-list>

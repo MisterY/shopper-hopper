@@ -5,6 +5,10 @@
     <q-input label="Product Name" v-model="product.name" />
     <q-input label="Description" v-model="product.description" />
 
+    <p>Available in stores</p>
+
+    <div>List of stores</div>
+
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="check" color="accent" @click="onFabClick" />
     </q-page-sticky>

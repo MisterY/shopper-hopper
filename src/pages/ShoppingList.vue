@@ -1,5 +1,7 @@
 <template>
   <q-page class="q-ma-sm">
+    <div class="container">up bottom</div>
+
     Shopping List
 
     <q-list>
@@ -77,3 +79,8 @@ function onFabClick() {
 }
 </script>
   
+<style lang="scss" scoped>
+.container {
+  display: flex;
+}
+</style>
